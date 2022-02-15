@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GPA.Net
 {
-    internal class StudentResultRequestModel
+    public class StudentResultRequestModel
     {
         public string CourseName { get; set; }
         public string CourseCode { get; set;}
@@ -20,6 +20,5 @@ namespace GPA.Net
         public int Point { get; set; }
 
         public int Weight { get; set; }
-
     }
 }

@@ -6,26 +6,24 @@ namespace GPA.Net
 {
     public class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            Console.WriteLine("Please fill in the course name and unit");
-            Console.WriteLine("To exit, enter No, to continue enter Yes");
+            Console.WriteLine("------------FOLLOW THE INSTRUCTIONS CAREFULLY ------------------\n \n");
+            Console.WriteLine("To Contine enter \"Yes\",to Exit enter \"No\"");
             string input = Console.ReadLine();
 
             var courseList = new List<StudentResultRequestModel>();
 
-
-            while (input.ToLower() != "no")
+            while (input.ToLower() !="No".ToLower())
             {
                 Console.WriteLine("Enter course name");
                 var courseName = Console.ReadLine().ToUpper();
 
                 while (string.IsNullOrEmpty(courseName) || courseName.Length != 3)
                 {
-                    Console.WriteLine("Course input invalid");
-
+                    Console.WriteLine("Course name input invalid, Course name must be three letters ");
+                    Console.WriteLine("Enter course name");
                     courseName = Console.ReadLine();
-
                 }
 
                     Console.WriteLine("Enter course code");
@@ -40,11 +38,11 @@ namespace GPA.Net
                     Console.WriteLine("Input the correct unit");
                     courseUnit = int.Parse(Console.ReadLine());
                 }
-
-
                 Console.WriteLine("Enter course score");
                 var courseScore = decimal.Parse(Console.ReadLine());
-                
+
+
+                 
 
                 ScoreGradeModel gradeScore = GetScoreGrade(courseScore);
                 if (gradeScore == null)
@@ -52,6 +50,7 @@ namespace GPA.Net
                     Console.WriteLine("Could not determine score grade");
                     break;
                 }
+                
 
                 var courseResult = new StudentResultRequestModel()
                 {
@@ -66,7 +65,8 @@ namespace GPA.Net
 
                 };
                 courseList.Add(courseResult);
-                Console.WriteLine("Enter Yes to continue");
+
+                Console.WriteLine("Enter Yes to continue ");
                var proceed =  Console.ReadLine();
                 if (proceed.ToLower() != "yes")
                 {
@@ -75,19 +75,20 @@ namespace GPA.Net
             
             }
             
-            var totalUnit = courseList.Sum(x => x.CourseUnit);
+            var totalUnit = courseList.Sum(item => item.CourseUnit);
 
-            var totalWeight = courseList.Sum(x => x.Weight);
+            var totalWeight = courseList.Sum(item => item.Weight);
 
-            var totalGradePoint = courseList.Sum(x => x.Point);
+            var totalGradePoint = courseList.Sum(item => item.Point);
 
             var GDP = totalWeight / totalGradePoint;
 
             Table.Display(courseList);
-            Console.WriteLine($"Total Course Unit Registered is {totalUnit}");
 
-            Console.WriteLine($"Total Weight Point is {totalGradePoint}");
+            Console.WriteLine($"Total Course Unit is {totalUnit}");
 
+            Console.WriteLine($"Total Course Passed is {totalGradePoint}");
+            
             Console.WriteLine($"Total  Weight Point is {totalWeight}");
 
             Console.WriteLine($"Your GDP is {GDP:N2}");
@@ -97,7 +98,7 @@ namespace GPA.Net
         }
 
 
-        public static ScoreGradeModel GetScoreGrade(decimal score)
+        static ScoreGradeModel GetScoreGrade(decimal score)
         {
             if(score > 100 || score < 0 )
             {
@@ -109,7 +110,7 @@ namespace GPA.Net
                 {
                     Grade = "E",
                     Point = 1,
-                    Remark = "Very poor result"
+                    Remark = "Pass"
                 };
             }
 
@@ -119,7 +120,7 @@ namespace GPA.Net
                 {
                     Grade = "D",
                     Point = 2,
-                    Remark = "poor result"
+                    Remark = "Fair"
                 };
             }
             if (score >= 50 && score <= 59)
@@ -128,7 +129,7 @@ namespace GPA.Net
                 {
                     Grade = "C",
                     Point = 3,
-                    Remark = " Fair result"
+                    Remark = "Good"
                 };
             }
             if (score >= 60 && score <= 69)

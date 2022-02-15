@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GPA.Net
 {
-    public class ScoreGradeModel
+    class ScoreGradeModel
     {
         public string Grade { get; set; }
         public int Point { get; set; }
